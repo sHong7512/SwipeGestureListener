@@ -18,7 +18,41 @@ open class OnSwipeGestureListener(context: Context) : View.OnTouchListener {
         gestureDetector = GestureDetector(context, GestureListener())
     }
 
+    var moveX = 0f
+    var moveY = 0f
+    var defaultX = 0f
+    var defaultY = 0f
     override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+        // 뷰가 살짝 따라오게 애니메이션 넣은부분
+        // 없어도 무방함
+        if(v != null){
+            when (event?.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    defaultX = v.x
+                    defaultY = v.y
+                    moveX = v.x - event.rawX/5
+                    moveY = v.y - event.rawY/5
+                }
+
+                MotionEvent.ACTION_MOVE -> {
+                    v.animate()
+                        .x(event.rawX/5 + moveX)
+                        .y(event.rawY/5 + moveY)
+                        .setDuration(0)
+                        .start()
+                }
+
+                MotionEvent.ACTION_UP -> {
+                    v.animate()
+                        .x(defaultX)
+                        .y(defaultY)
+                        .setDuration(150L)
+                        .start()
+                }
+            }
+        }
+
+        // 제스처 받아오는 부분
         try {
             return gestureDetector.onTouchEvent(event)
         } catch (e: Exception) {
@@ -28,7 +62,6 @@ open class OnSwipeGestureListener(context: Context) : View.OnTouchListener {
     }
 
     private inner class GestureListener : GestureDetector.SimpleOnGestureListener() {
-
 
         override fun onDown(e: MotionEvent): Boolean {
             return true
