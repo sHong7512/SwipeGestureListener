@@ -11,18 +11,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        findViewById<View>(R.id.blockView).setOnTouchListener(object : OnSwipeGestureListener(this@MainActivity){
+        findViewById<View>(R.id.blockView).setOnTouchListener(object : OnMultiSwipeListener(this@MainActivity){
             override fun onSwipeLeft() {
-                SingleToast.show_Short(this@MainActivity, "Left Swipe!")
+                SingleToast.showShort(this@MainActivity, "Left Swipe!")
             }
             override fun onSwipeRight() {
-                SingleToast.show_Short(this@MainActivity, "Right Swipe!")
+                SingleToast.showShort(this@MainActivity, "Right Swipe!")
             }
             override fun onSwipeTop() {
-                SingleToast.show_Short(this@MainActivity, "Up Swipe!")
+                SingleToast.showShort(this@MainActivity, "Up Swipe!")
             }
             override fun onSwipeBottom() {
-                SingleToast.show_Short(this@MainActivity, "Bottom Swipe!")
+                SingleToast.showShort(this@MainActivity, "Bottom Swipe!")
             }
         })
     }
@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
     class SingleToast{
         companion object{
             var toast: Toast? = null
-            fun show_Short(context: Context, msg: String){
+            fun showShort(context: Context, msg: String){
                 toast?.cancel()
                 toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT).apply { show() }
             }

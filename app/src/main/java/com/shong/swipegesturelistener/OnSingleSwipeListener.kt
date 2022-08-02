@@ -5,7 +5,7 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 
-open class OnSwipeGestureListener(context: Context) : View.OnTouchListener {
+open class OnSingleSwipeListener(context: Context) : View.OnTouchListener {
 
     private val gestureDetector: GestureDetector
 
@@ -64,6 +64,7 @@ open class OnSwipeGestureListener(context: Context) : View.OnTouchListener {
     private inner class GestureListener : GestureDetector.SimpleOnGestureListener() {
 
         override fun onDown(e: MotionEvent): Boolean {
+            // 제스처에 꼭 필요함
             return true
         }
 
@@ -74,11 +75,8 @@ open class OnSwipeGestureListener(context: Context) : View.OnTouchListener {
                 val diffX = e2.x - e1.x
                 if (Math.abs(diffX) > Math.abs(diffY)) {
                     if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-                        if (diffX > 0) {
-                            onSwipeRight()
-                        } else {
-                            onSwipeLeft()
-                        }
+                        if (diffX > 0) onSwipeRight()
+                        else onSwipeLeft()
                         result = true
                     }
                 } else if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
